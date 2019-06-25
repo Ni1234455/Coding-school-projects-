@@ -1,0 +1,31 @@
+while(True):
+  
+  print("MAIN MENU")
+  print("---------------")
+  print("\t1. Addition")
+  print("---------------")
+  print("\t2. Subtraction")
+  print("---------------")
+  print("\t3. Multiplication")
+  print("---------------")
+  print("\t4. Division")
+  print("---------------")
+  print("\t5. Percentage")
+  print("---------------")
+  print("\t6. Exponentiation")
+  print("---------------")
+  print("\t7. N root")
+  print("---------------")
+  print("\t8. Circle's circumference")
+  print("---------------")
+  print("\t9. Quit")
+
+  x = input("Please enter a number from 1 to 9")
+  if(x > 9 or x < 1):
+    print("Those numbers are not a choice")
+
+  elif(x == 1):
+    addend1 = input("You choose Addition please enter a number")
+    addend2 = input("Choose another number to add")
+    addition = addend1 + addend2
+    print("The result is " + str(addition))
