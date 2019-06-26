@@ -1,3 +1,66 @@
+#Finish Calculator functionality
+#Compartmentalize calculator operations into functions
+#Create TCS_Calculator function
+
+def addition():
+  addend1 = input("You choose Addition please enter a number")
+  addend1 = int(addend1)
+  addend2 = input("Choose another number to add")
+  addend2 = int(addend2)
+  addition = addend1 + addend2
+  print("The result is " + str(addition))
+
+def subtraction():
+  number1 = input("You choose Subtraction please enter a number")
+  number1 = int(number1)
+  number2 = input("Choose another number to subtract")
+  number2 = int(number2)
+  subtraction = number1 - number2
+  print("The result is " + str(subtraction))
+
+def multiplication():
+  factor1 = input("You choose Multiplication please enter a number")
+  factor1 = int(factor1)
+  factor2 = input("Choose another number to subtract")
+  factor2 = int(factor2)
+  multiplication = factor1 * factor2
+  print("The result is " + str(multiplication))
+
+def division():
+  number1 = input("You choose Division please enter a number")
+  number1 = int(number1)
+  number2 = input("Choose another number to Divide")
+  number2 = int(number2)
+  division = number1 / number2
+  print("The result is " + str(division))
+
+def percentage():
+  number1 = input("You choose Percentage please enter a number")
+  number1 = int(number1)
+  number2 = input("Choose what will be the percentage of the first number ")
+  number2 = int(number2)
+  percentage = (number1 / 100) * number2
+  print("The result is " + str(percentage))
+
+def exponentiation():
+  number1 = input("You choose Exponentiation please enter a number")
+  number1 = int(number1)
+  number2 = input("Choose what will be the exponent of the operation")
+  number2 = int(number2)
+  exponentiation = number1 ** number2
+  print("The result is " + str(exponentiation))
+
+def nRoot():
+  number1 = input("You choose N root please enter a number")
+  number1 = int(number1)
+  number2 = input("Choose what will be the exponent of the root")
+  number2 = int(number2)
+  root = number1 ** 1/number2
+  print("The result is " + str(root))
+
+
+
+
 while(True):
   
   print("MAIN MENU")
@@ -16,16 +79,39 @@ while(True):
   print("---------------")
   print("\t7. N root")
   print("---------------")
-  print("\t8. Circle's circumference")
-  print("---------------")
-  print("\t9. Quit")
+  print("\t8. Quit")
 
   x = input("Please enter a number from 1 to 9")
-  if(x > 9 or x < 1):
+
+  x = int(x)
+
+  if(x > 8 or x < 1):
     print("Those numbers are not a choice")
 
   elif(x == 1):
-    addend1 = input("You choose Addition please enter a number")
-    addend2 = input("Choose another number to add")
-    addition = addend1 + addend2
-    print("The result is " + str(addition))
+    addition()
+      
+
+   
+  elif(x == 2):
+    subtraction()
+  
+  elif(x == 3):
+    multiplication()
+
+  elif(x == 4):
+    division()
+
+
+  elif(x == 5):
+    percentage()
+  
+  elif(x == 6):
+    exponentiation()
+
+  elif(x == 7):
+    nRoot()
+
+  elif(x == 8):
+    break
+
