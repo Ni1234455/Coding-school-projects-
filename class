@@ -1,0 +1,100 @@
+##Create a shape class that contains in the following:
+#Height, width, and length (0 if 2D), number of sides (1 for circles), a variable that represents the diagonal or diameter (depending on shape type)
+#It should also have the following functions:
+#Change height, change width, change length, change area, change volume (if 3D), change shape
+
+###GOALS:
+#UpdateDiameter() function
+#PrintType() function
+#2D/3D uses
+
+
+#For diameter calculation:
+#You may assume only perfect circles exist
+#You may assume only right triangles exist
+#If it is a square or rectangle, the diameter variable should represent the diagonal of the shape
+#For any triangle, you may assume the diameter is simply the longest side
+#You may assume for the time being no shape with greater than 4 sides exists
+
+class Shape():
+
+  def __init__(self, height, width, numberOfSides):
+    self.height = height
+    self.width = width
+    #self.length = length
+    self.numberOfSides = numberOfSides
+    if(numberOfSides == 1):
+      self.diameter = height
+    elif(numberOfSides == 3):
+      self.diameter = (height * (width / 2))** (1/2)
+    elif(numberOfSides == 4):
+      self.diameter = (height**2 + width**2) ** (1/2)
+    else:
+      print("That is not a possible shape")
+
+  def changeHeight(self):
+    self.height = input()
+
+  def changeWidth(self):
+    self.width = input()
+
+  #def changeLength(self, length):
+   # self.length = input()
+
+  def changeNumberOfSides(self, numberOfSides):
+    self.numberOfSides = input()
+
+  #def changeDiameter(self, diameter):
+   # self.diameter = input()
+
+
+triangle = Shape(1,1,1)
+print(triangle.diameter)
+
+
+'''
+class Store():
+  def __init__(self,products,year,brand):
+    self.products = products
+    self.year = year
+    self.brand = brand
+    self.unitsSold = 15
+  
+  def units__sold(self):
+    self.unitsSold = self.unitsSold + 1
+    print("The units sold are " + str(self.unitsSold))
+    
+store1 = Store('fruit', 2018, 'Haribo')
+print(store1.products)
+print(store1.year)
+print(store1.brand)
+store1.units__sold()
+store1.units__sold()
+'''
+
+
+'''
+---CLASS CREATION EXAMPLE---
+
+class Car():
+  def __init__(self,make,model,year):
+    self.make = make
+    self.model = model
+    self.year = year
+    self.fuel_capacity = 15
+    self.fuel_level = 0
+
+  def fill_tank(self):
+    self.fuel_level = self.fuel_capacity
+    print("Fuel tank is full.")
+  def drive(self):
+    print("The " + self.make + "is currently in Drive.")
+
+car1 = Car('Audi','A6', 2016)
+print(car1.make)
+print(car1.model)
+print(car1.year)
+
+car2 = Car('Jeep','Jeep_Make_2',2001)
+car2.drive()
+'''
