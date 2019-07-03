@@ -1,0 +1,110 @@
+##Create a shape class that contains in the following:
+#Height, width, and length (0 if 2D), number of sides (1 for circles), a variable that represents the diagonal or diameter (depending on shape type)
+#It should also have the following functions:
+#Change height, change width, change length, change area, change volume (if 3D), change shape
+
+###GOALS:
+#UpdateDiameter() function
+#PrintType() function
+#2D/3D uses
+
+
+#For diameter calculation:
+#You may assume only perfect circles exist
+#You may assume only right triangles exist
+#If it is a square or rectangle, the diameter variable should represent the diagonal of the shape
+#For any triangle, you may assume the diameter is simply the longest side
+#You may assume for the time being no shape with greater than 4 sides exists
+
+
+##UpdateDiameter() should be called whenever the changeHeight,changeWidth, or changeNumberOfSides is called and change self.diameter to accurately reflect the updated shape's diameter
+
+class Shape():
+
+  def __init__(self, name, height, width, numberOfSides):
+    self.name = name
+    self.height = height
+    self.width = width
+    self.diameter = 0
+    #self.length = length
+    self.numberOfSides = numberOfSides
+    if(numberOfSides == 1):
+      self.diameter = height
+    elif(numberOfSides == 3):
+      self.diameter = (height * (width / 2))** (1/2)
+    elif(numberOfSides == 4):
+      self.diameter = (height**2 + width**2) ** (1/2)
+    else:
+      print("That is not a possible shape")
+
+
+  def changeSides(self):
+    self.numberOfSides = input("Change the number of your sides")
+    self.updateDiameter()
+
+  def returnDiameter(self):
+    return self.diameter
+
+  def updateDiameter(self):
+    if(self.numberOfSides == 1):
+      self.diameter = self.height
+    elif(self.numberOfSides == 3):
+      self.diameter = (self.height * (self.width / 2))** (1/2)
+    elif(self.numberOfSides == 4):
+      self.diameter = (self.height**2 + self.width**2) ** (1/2)
+    else:
+      print("That is not a possible shape")
+
+  def returnHeight(self):
+    return self.height
+
+  def changeName(self):
+    self.name = input("Choose a name")
+
+  def changeHeight(self):
+    self.height = int(input())
+
+  def changeWidth(self):
+    self.width = int(input())
+
+  #def changeLength(self, length):
+   # self.length = input()
+
+  def changeNumberOfSides(self):
+    self.numberOfSides = int(input())
+
+  #def changeDiameter(self, diameter):
+   # self.diameter = input()
+  
+  def getName(self):
+    return self.name
+
+Shape1 = Shape(input("Input the name of your shape"),int(input("Input the height of your shape")),int(input("Input the width of your shape")),int(input("Input the number of sides your shape has")))
+
+
+#print("\nThe name of your shape is " + Shape1.getName())
+
+
+
+while(True):
+  z = input("Select an option:\n 1)Change the name of your shape \n 2) Change the height of your shape \n 3) Get the height of your shape \n 4) Get your shape's diameter \n 5) Change the number of sides of your shape \n 6) Quit")
+
+  if(z == "6"):
+    break
+  elif(z == "1"):
+    #Call a class function to allow the user to change the shape's name ex: Shape1.changeName()
+    Shape1.changeName()
+
+  elif(z=="2"):
+    Shape1.changeHeight()
+    Shape1.updateDiameter()
+    #Don't forget to update diameter
+  elif(z=="3"):
+    print(Shape1.returnHeight())
+   
+  elif(z=="4"):
+    print(Shape1.returnDiameter())
+    #Call a class function that returns the diameter of your shape ex: print(Shape1.getDiam())
+  elif(z=="5"):
+    Shape1.changeSides()
+
