@@ -1,0 +1,125 @@
+class Warrior():
+  def __init__(self):
+    self.HP = 150
+    self.MP = 50
+    self.ATK = 100
+    self.DEF = 200
+    self.MGK = 75
+    self.MGDEF = 250
+    self.SPD = 80
+
+  def get_HP(self)
+    return self.HP
+
+  def set_HP(self, HP)
+    self.HP = HP
+
+class Wizard():
+  def __init__(self):
+    self.HP = 75
+    self.MP = 200
+    self.ATK = 150
+    self.DEF = 80
+    self.MGK = 250
+    self.MGDEF = 100
+    self.SPD = 50
+    
+class Assassin():
+  def __init__(self):
+    self.HP = 80
+    self.MP = 75
+    self.ATK = 200
+    self.DEF = 100
+    self.MGK = 50
+    self.MGDEF = 150
+    self.SPD = 250
+
+  class Knight():
+  def __init__(self):
+    self.HP = 100
+    self.MP = 150
+    self.ATK = 250
+    self.DEF = 200
+    self.MGK = 50
+    self.MGDEF = 75
+    self.SPD = 80
+
+
+##Begin main function
+def RPG():
+  choosingClass = input("Choose a class:\n 1) Warrior \n 2) Wizard \n 3) Assassin \n 4) Knight")
+
+  if(choosingClass == 1):
+
+  elif(choosingClass == 2):
+
+  elif(choosingClass == 3):
+
+  else(choosingClass == 4)
+ 
+
+
+
+
+##Main menu for user to select options
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+###Entity class
+-Warrior
+-Wizard
+-Assassin
+-Knight
+
+
+
+
+Attributes:
+Each attribute below should have a corresponding "get_" (ex: returnHP) function and "set_" (ex: changeHP) function. More attributes may be created or necessary as development continues
+
+HP
+MP
+ATK
+DEF
+MGK
+MGDEF
+SPD
+
+#Combat system
+Turn-based combat;
+At the beginning of every turn, the user will choose between Attacking, Using a Skill, or Defending
+  Attacking is a simple attack; damage calculated:
+  receiver's new HP = receiver's [(DEF * 1.25) (if defending) or DEF (if any other action)] - user's ATK
+  Skills; From a set list to be enumerated soon. Costs MP to accomplish a variety of facts; MGK and MGKDef account for the damage calculation
+  Def: Boosts DEF and MGKDEF by 1.25x at the cost of an action
+
+Once actions are selected by both parties, SPD determines who moves first; the entity with the highest speed  moves first, and the entity with the lowest speed moves last
+
+Immediately once an entire party's HP is depleted,that side is declared to have lost, and the other side is declared to have won.
+
+
+List of Skills
+
+-Fire (Magic damage)
+-Heal (Restores some HP)
+-Regenerate (Restores small amounts of HP over 4-6 turns)
+-Poison (Deals small amounts of MGK damage over 3-5 turns)
+-Haste (Boots SPD of an individual for 2-4 turns)
+-Slow (Reduces SPD of an individual for 2-4 turns)
+-Weaken (Reduces target's DEF and MGKDEF for 1-2 turns)
+-Protect (Redirects all ATK damage from target to user for 2-3 turns)
+-Buff (Increases ATK for 2-3 turns)
+-Aura (Increases MGKDEF for 1-2 turns)
+'''
