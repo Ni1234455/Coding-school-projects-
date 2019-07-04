@@ -1,17 +1,21 @@
+import random
+
+RPG()
+
 class Warrior():
   def __init__(self):
-    self.HP = 150
+    self.HP = 100
     self.MP = 50
-    self.ATK = 100
+    self.ATK = 150
     self.DEF = 200
     self.MGK = 75
     self.MGDEF = 250
     self.SPD = 80
 
-  def get_HP(self)
+  def get_HP(self):
     return self.HP
 
-  def set_HP(self, HP)
+  def set_HP(self, HP):
     self.HP = HP
 
 class Wizard():
@@ -34,29 +38,141 @@ class Assassin():
     self.MGDEF = 150
     self.SPD = 250
 
-  class Knight():
+class Knight():
   def __init__(self):
-    self.HP = 100
-    self.MP = 150
-    self.ATK = 250
-    self.DEF = 200
-    self.MGK = 50
-    self.MGDEF = 75
+    self.HP = 150
+    self.MP = 100
+    self.ATK = 200
+    self.DEF = 250
+    self.MGK = 75
+    self.MGDEF = 50
     self.SPD = 80
+
+
 
 
 ##Begin main function
 def RPG():
-  choosingClass = input("Choose a class:\n 1) Warrior \n 2) Wizard \n 3) Assassin \n 4) Knight")
+  choosingClass = int(input("Choose a class:\n 1) Warrior \n 2) Wizard \n 3) Assassin \n 4) Knight"))
 
-  if(choosingClass == 1):
+  if(choosingClass == int(1)):
+    player = Warrior()
+    print("You choose warrior")
+    print("HP: " + str(player.HP))
+    print("MP: " + str(player.MP))
+    print("ATK: " + str(player.ATK))
+    print("DEF: " + str(player.DEF))
+    print("MGK: " + str(player.MGK))
+    print("MGDEF: " + str(player.MGDEF))
+    print("SPD: " + str(player.SPD))
+    print("Your enemy is warrior")
+    enemy =  Warrior()
+    print("HP: " + str(enemy.HP))
+    print("MP: " + str(enemy.MP))
+    print("ATK: " + str(enemy.ATK))
+    print("DEF: " + str(enemy.DEF))
+    print("MGK: " + str(enemy.MGK))
+    print("MGDEF: " + str(enemy.MGDEF))
+    print("SPD: " + str(enemy.SPD))
 
-  elif(choosingClass == 2):
+  elif(choosingClass == int(2)):
+    player = Wizard()
+    print("You choose wizard")
+    print("HP: " + str(player.HP))
+    print("MP: " + str(player.MP))
+    print("ATK: " + str(player.ATK))
+    print("DEF: " + str(player.DEF))
+    print("MGK: " + str(player.MGK))
+    print("MGDEF: " + str(player.MGDEF))
+    print("SPD: " + str(player.SPD))
 
-  elif(choosingClass == 3):
+  elif(choosingClass == int(3)):
+    player = Assassin()
+    print("You choose assassin")
+    print("HP: " + str(player.HP))
+    print("MP: " + str(player.MP))
+    print("ATK: " + str(player.ATK))
+    print("DEF: " + str(player.DEF))
+    print("MGK: " + str(player.MGK))
+    print("MGDEF: " + str(player.MGDEF))
+    print("SPD: " + str(player.SPD))
 
-  else(choosingClass == 4)
- 
+  elif(choosingClass == int(4)):
+    player = Knight()
+    print("You choose knight")
+    print("HP: " + str(player.HP))
+    print("MP: " + str(player.MP))
+    print("ATK: " + str(player.ATK))
+    print("DEF: " + str(player.DEF))
+    print("MGK: " + str(player.MGK))
+    print("MGDEF: " + str(player.MGDEF))
+    print("SPD: " + str(player.SPD))
+  
+  else:
+    print("That is not an option")
+    RPG() #May need to be a break or continue statement if error thrown
+
+
+def BattleMenu():
+  move = int(input("\n 1) Attack \n 2) Defend \n 3) Magic"))
+  if()
+
+def youWin():
+  print("You Won")
+
+def youLose():
+  print("You died")
+
+
+
+def playerMove():
+  if(magical == FALSE)
+      enemy.HP = enemy.HP - (player.ATK * 50) / enemy.DEF
+      if(enemy.HP == 0):
+        youWin()
+    else:
+      enemy.HP = enemy.HP - (player.MGK* 50) / enemy.MGDEF
+      player.MP = player.MP - 15
+      if(enemy.HP == 0):
+        youWin()
+
+def enemyMove():
+  if(magical == FALSE)
+    player.HP = player.HP - (enemy.ATK * 50) / player.DEF
+    if(player.HP == 0):
+      youLose()
+  else:
+    player.HP = player.HP - (enemy.MGK* 50) / player.MGDEF
+    enemy.MP = enemy.MP - 15
+    if(player.HP == 0):
+      youLose()
+
+
+if(player.SPD == enemy.SPD):
+  x = random.uniform(0,1)
+  if(x > 0.5):
+    movesFirst = TRUE
+  else:
+    movesFirst = FALSE
+
+
+def battleSystem():
+  if(moveFirst == TRUE):
+    playerMove()
+    enemyMove()
+  else:
+    enemyMove()
+    playerMove()
+
+
+
+#damage = (ATK * 50) / (DEF / MKDEF) 
+
+#Round of combat Order of operations FOR TESTING#
+#User inputs what player will do 
+#User inputs what enemy will do
+#Print to screen (in order) each person's action
+#Next round
 
 
 
