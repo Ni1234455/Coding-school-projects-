@@ -1,6 +1,5 @@
 import random
 
-RPG()
 
 class Warrior():
   def __init__(self):
@@ -65,15 +64,9 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-    print("Your enemy is warrior")
-    enemy =  Warrior()
-    print("HP: " + str(enemy.HP))
-    print("MP: " + str(enemy.MP))
-    print("ATK: " + str(enemy.ATK))
-    print("DEF: " + str(enemy.DEF))
-    print("MGK: " + str(enemy.MGK))
-    print("MGDEF: " + str(enemy.MGDEF))
-    print("SPD: " + str(enemy.SPD))
+    randomEnemy()
+    BattleMenu() 
+    return player
 
   elif(choosingClass == int(2)):
     player = Wizard()
@@ -85,6 +78,9 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
+    randomEnemy()
+    BattleMenu() 
+    return player
 
   elif(choosingClass == int(3)):
     player = Assassin()
@@ -96,6 +92,9 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
+    randomEnemy()
+    BattleMenu() 
+    return player
 
   elif(choosingClass == int(4)):
     player = Knight()
@@ -107,62 +106,115 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-  
+    randomEnemy()
+    BattleMenu() 
+    return player
+
   else:
     print("That is not an option")
     RPG() #May need to be a break or continue statement if error thrown
+  
+  
+  
 
-
+  if(player.SPD == enemy.SPD):
+    x = random.uniform(0,1)
+    if(x > 0.5):
+      movesFirst = True
+    else:
+      movesFirst = False
+      
 def BattleMenu():
-  move = int(input("\n 1) Attack \n 2) Defend \n 3) Magic"))
-  if()
-
+  move = int(input("\n 1) Attack \n 2) Defend \n 3) MagicAttack \n 4) MagicDefend"))
+  if(move == 1):
+    magical = False
+    playerAttacks()
+  elif(move == 2):
+    magical = False
+    playerDefends()
+  elif(move == 3):
+    magical = True
+    playerAttacks()
+  elif(move == 4):
+    magical = True
+    playerDefends()
+    
 def youWin():
   print("You Won")
 
 def youLose():
   print("You died")
 
+def playerAttacks():
+  if(magical == False):
+    enemyDamage = enemy.HP = enemy.HP - (player.ATK * 50) / enemy.DEF
+    if(enemy.HP == 0):
+      youWin()
+  else:
+    enemyDamage = enemy.HP = enemy.HP - (player.MGK* 100) / enemy.MGDEF
+    player.MP = player.MP - 50
+    if(enemy.HP == 0):
+      youWin()
 
-
-def playerMove():
-  if(magical == FALSE)
-      enemy.HP = enemy.HP - (player.ATK * 50) / enemy.DEF
-      if(enemy.HP == 0):
-        youWin()
-    else:
-      enemy.HP = enemy.HP - (player.MGK* 50) / enemy.MGDEF
-      player.MP = player.MP - 15
-      if(enemy.HP == 0):
-        youWin()
-
-def enemyMove():
-  if(magical == FALSE)
-    player.HP = player.HP - (enemy.ATK * 50) / player.DEF
+def enemyAttacks():
+  magical = True
+  if(magical == False):
+    playerDamage = player.HP = player.HP - (enemy.ATK * 50) / player.DEF
     if(player.HP == 0):
       youLose()
   else:
-    player.HP = player.HP - (enemy.MGK* 50) / player.MGDEF
+    playerDamage = player.HP = player.HP - (enemy.MGK* 100) / player.MGDEF
     enemy.MP = enemy.MP - 15
     if(player.HP == 0):
       youLose()
 
 
-if(player.SPD == enemy.SPD):
-  x = random.uniform(0,1)
-  if(x > 0.5):
-    movesFirst = TRUE
-  else:
-    movesFirst = FALSE
 
 
-def battleSystem():
-  if(moveFirst == TRUE):
-    playerMove()
-    enemyMove()
+def playerDefends():
+  if(magical == False):
+    enemyAttacks()
+    playerDamage = playerDamage / 4
   else:
-    enemyMove()
-    playerMove()
+    enemyAttacks()
+    playerDamage = playerDamage / 6
+    player.MP = player.MP - 15
+
+def enemyDefends():
+  if(magical == False):
+    playerAttacks()
+    enemyDamage = enemyDamage / 4
+  else:
+    playerAttacks()
+    enemyDamage = enemyDamage / 6
+    enemy.MP = enemy.MP - 15
+  
+
+def randomEnemy():
+  enemyChoice = round(random.uniform(1,4))
+  if(enemyChoice == 1):
+    enemy = Warrior()
+    name = "warrior"
+  elif(enemyChoice == 2):
+    enemy = Wizard()
+    name = "wizard"
+  elif(enemyChoice == 3):
+    enemy = Assassin()
+    name = "assassin"
+  elif(enemyChoice == 4):
+    enemy = Knight()
+    name = "knight"
+  print("Your enemy is " + str(name))
+  print("HP: " + str(enemy.HP))
+  print("MP: " + str(enemy.MP))
+  print("ATK: " + str(enemy.ATK))
+  print("DEF: " + str(enemy.DEF))
+  print("MGK: " + str(enemy.MGK))
+  print("MGDEF: " + str(enemy.MGDEF))
+  print("SPD: " + str(enemy.SPD))
+player = RPG()
+enemy = randomEnemy()
+
 
 
 
