@@ -4,6 +4,7 @@ import random
 class Warrior():
   def __init__(self):
     self.HP = 100
+    self.MAXHP = 100
     self.MP = 50
     self.ATK = 150
     self.DEF = 200
@@ -20,6 +21,7 @@ class Warrior():
 class Wizard():
   def __init__(self):
     self.HP = 75
+    self.MAXHP = 75
     self.MP = 200
     self.ATK = 150
     self.DEF = 80
@@ -30,6 +32,7 @@ class Wizard():
 class Assassin():
   def __init__(self):
     self.HP = 80
+    self.MAXHP = 80
     self.MP = 75
     self.ATK = 200
     self.DEF = 100
@@ -40,12 +43,83 @@ class Assassin():
 class Knight():
   def __init__(self):
     self.HP = 150
+    self.MAXHP = 150
     self.MP = 100
     self.ATK = 200
     self.DEF = 250
     self.MGK = 75
     self.MGDEF = 50
     self.SPD = 80
+
+def enemyAttacks(magical, player, enemy):
+  if(magical == False):
+    playerDamage = (enemy.ATK * 50) / player.DEF
+    #player.HP = player.HP - playerDamage
+    print ("Enemy inflicts " + str(playerDamage) + " damage!")
+    #if(player.HP == 0):
+    #  youLose()
+  else:
+    playerDamage = (enemy.MGK* 100) / player.MGDEF
+    #player.HP = player.HP - playerDamage
+    #enemy.HP = enemy.HP - enemyDamage
+    enemy.MP = enemy.MP - 15
+    print ("Enemy inflicts " + str(playerDamage) + " magic damage!")
+  return playerDamage
+    #if(player.HP == 0):
+    #  youLose()
+
+def enemyDefends(magical, player, enemy):
+  if(magical == False):
+    print("Enemy is defending! Damage reduced by a factor of 4\n")
+    return 0
+  else:
+    print("Enemy is magic defending! Damage reduced by a factor of 6\n")
+    enemy.MP = enemy.MP - 15    
+    return -1
+
+
+##ENEMY ACTION DECISION TREE
+##ON THE FIRST ROUND: If enemy is a wizard or knight first, use  magic. If enemy is assassin or warrior, simply attack.
+#After first round:
+  #If player attacked or magic attacked last round and enemy has less than 50% HP, enemy defends or magic attack
+  #Else if the player attacked or magic attacked last round and enemy has greater than 50% HP, the enemy should randomly select any offensive action (attack or magic)
+  #else if the player defended or magic defended last round, the enemy should magic defend or attack
+  #else the enemy should attack
+
+#REMINDER TO SELF: INCLUDE "LAST ACTION" in BattleMenu()
+#Last action 
+# 0 if first round
+# 1 if played attack last turn
+#2 if played defended last turn
+# 3 if player used magic last turn
+#4 if played magic defended last turn
+def EnemyDecision(enemy,player,lastaction):
+  if((enemy.MGDEF == 50 or enemy.MGDEF == 100) and lastaction == 0):
+    magical = True
+    return enemyAttacks(magical,player,enemy)
+  elif((enemy.MGDEF == 150 or enemy.MGDEF == 250) and lastaction == 0):
+    magical = False
+    return enemyAttacks(magical,player,enemy)
+  elif((lastaction == 1) or (lastaction == 3) and (enemy.HP < enemy.MAXHP / 2)):
+    x = round(random.uniform(1,4))
+    if(x >= 2):
+      magical = False
+      return enemyDefends(magical,player,enemy)
+    else:
+      magical = True
+      return enemyAttacks(magical,player,enemy)
+  elif((lastAction == 4) or (lastActions == 2)):
+    x = round(random.uniform(1,4))
+    if(x >= 2):
+      magical = False
+      return enemyAttacks(magical,player,enemy)
+    else:
+      magical = True 
+      return enemyDefends(magical,player,enemy)
+  else:
+    magical = False
+    return enemyAttacks(magical,player,enemy)
+
 
 
 
@@ -64,8 +138,6 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-    randomEnemy()
-    BattleMenu() 
     return player
 
   elif(choosingClass == int(2)):
@@ -78,8 +150,6 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-    randomEnemy()
-    BattleMenu() 
     return player
 
   elif(choosingClass == int(3)):
@@ -92,8 +162,6 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-    randomEnemy()
-    BattleMenu() 
     return player
 
   elif(choosingClass == int(4)):
@@ -106,8 +174,6 @@ def RPG():
     print("MGK: " + str(player.MGK))
     print("MGDEF: " + str(player.MGDEF))
     print("SPD: " + str(player.SPD))
-    randomEnemy()
-    BattleMenu() 
     return player
 
   else:
@@ -123,64 +189,194 @@ def RPG():
       movesFirst = True
     else:
       movesFirst = False
-      
-def BattleMenu():
+
+
+
+def BattleMenu(player, enemy):
   move = int(input("\n 1) Attack \n 2) Defend \n 3) MagicAttack \n 4) MagicDefend"))
+
+  #Indicate lastaction = first round
+  lastaction = 0
   if(move == 1):
     magical = False
-    playerAttacks()
+    if(enemy.SPD > player.SPD):
+      
+      #Generate enemy decision
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+     
+     #Enemy moves first, so calculate player HP
+      player.HP = player.HP - playerDamage
+
+      #CHeck if player has lost
+      if player.HP <= 0:
+        youLose()
+        return
+
+      #Player moves first, check damage
+      enemyDamage = playerAttacks(magical, player, enemy)
+
+      #IF enemy has magic defended or defended, adjust damage
+      if (playerDamage == 0):
+        enemyDamage = enemyDamage/4
+      elif (playerDamage == -1):
+        enemyDamage = enemyDamage/6
+        
+      #Player moves second, calculate enemy HP
+      enemy.HP = enemy.HP - enemyDamage
+
+      #Check for victory
+      if enemy.HP <= 0:
+        youWin()
+        return
+      
+    else:
+      #Generate enemy decision
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+
+      #Player goes first, calculate damage
+      enemyDamage = playerAttacks(magical, player, enemy)
+      
+      #IF enemy has magic defended or defended, adjust damage
+      if (playerDamage == 0):
+        enemyDamage = enemyDamage/4
+      elif (playerDamage == -1):
+        enemyDamage = enemyDamage/6
+        
+      enemy.HP = enemy.HP - enemyDamage
+      if enemy.HP <= 0:
+        youWin()
+        return
+      
+     
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+        
+    lastaction  = 1
+
   elif(move == 2):
     magical = False
-    playerDefends()
+    if(enemy.SPD > player.SPD):
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      playerDamage = playerDamage/4
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+    else:
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      playerDamage = playerDamage/4
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+    lastaction = 2
   elif(move == 3):
     magical = True
-    playerAttacks()
+    if(enemy.SPD > player.SPD):
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+      enemyDamage = playerAttacks(magical, player, enemy)
+
+      #IF enemy has magic defended or defended, adjust damage
+      if (playerDamage == 0):
+        enemyDamage = enemyDamage/4
+      elif (playerDamage == -1):
+        enemyDamage = enemyDamage/6
+        
+      enemy.HP = enemy.HP - enemyDamage
+      if enemy.HP <= 0:
+        youWin()
+        return
+  
+    else:
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      enemyDamage = playerAttacks(magical,player,enemy)
+      #IF enemy has magic defended or defended, adjust damage
+      if (playerDamage == 0):
+        enemyDamage = enemyDamage/4
+      elif (playerDamage == -1):
+        enemyDamage = enemyDamage/6
+      enemy.HP = enemy.HP - enemyDamage
+      if enemy.HP <= 0:
+        youWin()
+        return
+        
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+    lastaction = 3
   elif(move == 4):
     magical = True
-    playerDefends()
+    if(enemy.SPD > player.SPD):
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      playerDamage = playerDamage/6
+      player.MP = player.MP -15
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+    else:
+      playerDamage = EnemyDecision(enemy,player,lastaction)
+      playerDamage = playerDamage/6
+      player.MP = player.MP -15
+      player.HP = player.HP - playerDamage
+      if player.HP <= 0:
+        youLose()
+        return
+    lastaction = 4
     
 def youWin():
   print("You Won")
+  
 
 def youLose():
   print("You died")
+  
 
-def playerAttacks():
+''' 
+actions of the player
+'''
+def playerAttacks(magical, player, enemy):
   if(magical == False):
-    enemyDamage = enemy.HP = enemy.HP - (player.ATK * 50) / enemy.DEF
-    if(enemy.HP == 0):
-      youWin()
+    enemyDamage = (player.ATK * 50) / enemy.DEF
+    #enemy.HP = enemy.HP - enemyDamage
+    print ("Player inflicts " + str(enemyDamage) + " damage!")
+    #if(enemy.HP == 0):
+    #  youWin()
   else:
-    enemyDamage = enemy.HP = enemy.HP - (player.MGK* 100) / enemy.MGDEF
+    enemyDamage = (player.MGK* 100) / enemy.MGDEF
+    #enemy.HP = enemy.HP - enemy damage
     player.MP = player.MP - 50
-    if(enemy.HP == 0):
-      youWin()
-
-def enemyAttacks():
-  magical = True
+    print ("Player inflicts " + str(enemyDamage) + " damage!")
+  return enemyDamage
+   # if(enemy.HP == 0):
+   #   youWin()
+      
+def playerDefends(magical, playerDamage, player):
   if(magical == False):
-    playerDamage = player.HP = player.HP - (enemy.ATK * 50) / player.DEF
-    if(player.HP == 0):
-      youLose()
-  else:
-    playerDamage = player.HP = player.HP - (enemy.MGK* 100) / player.MGDEF
-    enemy.MP = enemy.MP - 15
-    if(player.HP == 0):
-      youLose()
-
-
-
-
-def playerDefends():
-  if(magical == False):
-    enemyAttacks()
     playerDamage = playerDamage / 4
   else:
-    enemyAttacks()
     playerDamage = playerDamage / 6
     player.MP = player.MP - 15
+    
 
-def enemyDefends():
+'''
+actions of the player
+'''
+
+
+
+
+
+
+'''
+def enemyDefends(magical, player):
   if(magical == False):
     playerAttacks()
     enemyDamage = enemyDamage / 4
@@ -188,7 +384,12 @@ def enemyDefends():
     playerAttacks()
     enemyDamage = enemyDamage / 6
     enemy.MP = enemy.MP - 15
-  
+'''
+'''
+actions of the enemy'''
+'''jjj'''
+
+
 
 def randomEnemy():
   enemyChoice = round(random.uniform(1,4))
@@ -212,8 +413,22 @@ def randomEnemy():
   print("MGK: " + str(enemy.MGK))
   print("MGDEF: " + str(enemy.MGDEF))
   print("SPD: " + str(enemy.SPD))
-player = RPG()
-enemy = randomEnemy()
+  return enemy
+
+x="1"
+while(x=="1"):
+  player = RPG()
+  enemy = randomEnemy()
+  while(player.HP > 0 and enemy.HP > 0):
+    print("\nYour HP: " + str(player.HP))
+    print("Enemy HP: " + str(enemy.HP) + "\n")
+    BattleMenu(player,enemy)
+  
+  x=input("Press 1 to play again")
+
+
+
+
 
 
 
